@@ -50,3 +50,16 @@ class Feedforward(nn.Module):
             o4 = F.relu(self.f4(o3))
             x = self.out(o4)
         return s(x)
+
+class LSTMNetwork(nn.Module):
+    def __init__(self, input_size, num_layers, layer_width):
+        self.num_layers = num_layers
+        super(LSTMNetwork, self).__init__()
+        self.lstm = nn.LSTM(input_size, layer_width)
+        self.out = nn.Linear(layer_width, 1)
+
+    def forward(self, in_data):
+        'Can select from a number of diff layer combinations when model defined'
+        o1, _ = self.lstm(in_data)
+        x = self.out(F.relu(o1))
+        return s(x)
